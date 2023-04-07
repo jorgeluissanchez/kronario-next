@@ -15,6 +15,8 @@ interface MajorContextValue {
   categories: string[];
   filterMajors: (text: string) => void;
   filteredMajors: MajorProps[];
+  toggleMajorSelectionBadges: (category: string) => void;
+  selectedCategory: string;
 }
 
 const MajorContext = createContext<MajorContextValue>({
@@ -23,7 +25,9 @@ const MajorContext = createContext<MajorContextValue>({
   toggleMajorSelection: () => {},
   categories: [],
   filteredMajors: [],
-  filterMajors: () => {}
+  filterMajors: () => {},
+  toggleMajorSelectionBadges: () => {},
+  selectedCategory: "",
 });
 
 export const useMajorContext = () => useContext(MajorContext);
@@ -37,16 +41,19 @@ const MajorProvider = ({ children }: MajorProviderProps) => {
   const [majors, setMajors] = useState<MajorProps[]>([]);
   const [filteredMajors, setFilteredMajors] = useState<MajorProps[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const filterMajors = (text: string) => {
+    let filtered = majors.filter((major) => major.category === selectedCategory);
     if(text === ''){
-      setFilteredMajors(majors);
+      setFilteredMajors(filtered);
     }else{
       setFilteredMajors(
-        majors.filter((major) => major.name.toLowerCase().includes(text.toLowerCase())
-      ));
+        filtered.filter((major) =>
+          major.name.toLowerCase().includes(text.toLowerCase())
+        )
+      );
     }
-    
   };
 
   const toggleMajorSelection = (major: MajorProps) => {
@@ -62,10 +69,17 @@ const MajorProvider = ({ children }: MajorProviderProps) => {
     });
   };
 
+  const toggleMajorSelectionBadges = (category: string) => {
+    setSelectedCategory(category);
+    setFilteredMajors(majors.filter((major) => major.category === category));
+  };
+
+
   useEffect(() => {
     setMajors(data.item_list);
-    setFilteredMajors(data.item_list);
     setCategories(["Pregrado", "Posgrado"]);
+    setSelectedCategory("Pregrado");
+    setFilteredMajors(data.item_list.filter((major) => major.category == "Pregrado"));
   }, []);
 
   const value = {
@@ -74,7 +88,9 @@ const MajorProvider = ({ children }: MajorProviderProps) => {
     toggleMajorSelection,
     categories,
     filteredMajors,
-    filterMajors
+    filterMajors,
+    toggleMajorSelectionBadges,
+    selectedCategory,
   };
 
   return <MajorContext.Provider value={value}>{children}</MajorContext.Provider>;

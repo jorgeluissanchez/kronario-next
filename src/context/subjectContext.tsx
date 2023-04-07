@@ -17,15 +17,19 @@ interface SubjectContextValue {
   filterSubjects: (text: string) => void;
   categories: string[];
   filteredSubjects: SubjectProps[];
+  toggleSubjectSelectionBadges: (category: string) => void;
+  selectedCategory: string;
 }
 
 const SubjectContext = createContext<SubjectContextValue>({
-    subjects: [],
-    selectedSubjects: [],
-    toggleSubjectSelection: () => {},
-    filterSubjects: () => {},
-    categories: [],
-    filteredSubjects: [],
+  subjects: [],
+  selectedSubjects: [],
+  toggleSubjectSelection: () => {},
+  filterSubjects: () => {},
+  categories: [],
+  filteredSubjects: [],
+  toggleSubjectSelectionBadges: () => {},
+  selectedCategory: '',
 });
 
 export const useSubjectContext = () => useContext(SubjectContext);
@@ -39,7 +43,7 @@ const SubjectProvider = ({ children }: SubjectProviderProps) => {
   const [selectedSubjects, setSelectedSubjects] = useState<SubjectProps[]>([]);
   const [subjects, setSubjects] = useState<SubjectProps[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [filteredSubjects, setFilteredSubjects] = useState<SubjectProps[]>([]);
 
   const toggleSubjectSelection = (subject: SubjectProps) => {
@@ -56,27 +60,32 @@ const SubjectProvider = ({ children }: SubjectProviderProps) => {
   };
 
   const toggleCategorySelection = (category: string) => {
-    setSelectedCategories([category]); 
+    setSelectedCategory(category);
+    setFilteredSubjects(subjects.filter((subject) => subject.category.includes(category)));
   };
 
   const filterSubjects = (text: string) => {
+    let filtered = subjects.filter((subject) => subject.category.includes(selectedCategory)); 
+
     if (text === "") {
-      setFilteredSubjects(subjects);
+      setFilteredSubjects(filtered);
     } else {
       setFilteredSubjects(
-        subjects.filter((subject) =>
+        filtered.filter((subject) =>
           subject.name.toLowerCase().includes(text.toLowerCase())
         )
       );
     }
   };
 
-  useEffect(() => {
-        const response = `https://api.example.com/subjects?majors=${selectedMajors.map((major) => major.id).join(",")}`;
-        setSelectedSubjects([]);
-        setSubjects(data.item_list);
-        setFilteredSubjects(data.item_list);
-        setCategories(selectedMajors.map((major) => major.name));
+  useEffect(() => { 
+    let Majors = selectedMajors.map((major) => major.name);
+    const response = `https://api.example.com/subjects?majors=${selectedMajors.map((major) => major.id).join(",")}`;
+    setSelectedSubjects([]);
+    setSubjects(data.item_list);
+    setCategories(Majors);
+    setSelectedCategory(Majors[0]);
+    setFilteredSubjects(data.item_list.filter((subject) => subject.category.includes(Majors[0])));
   }, [selectedMajors]);
 
   const value = {
@@ -86,6 +95,8 @@ const SubjectProvider = ({ children }: SubjectProviderProps) => {
     filterSubjects,
     categories,
     filteredSubjects,
+    toggleSubjectSelectionBadges: toggleCategorySelection,
+    selectedCategory,
   };
 
   return <SubjectContext.Provider value={value}>{children}</SubjectContext.Provider>;

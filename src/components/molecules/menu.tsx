@@ -11,7 +11,7 @@ interface MenuProps {
   onClick?: () => void;
 }
 
-export default function Menu({ type = "none", buttonLink, text, inputChange }: MenuProps) {
+export default function Menu({ type = "none", buttonLink, text, inputChange, onClick }: MenuProps) {
 
   return (
     <nav className="flex items-center justify-between flex-wrap bg-white border-b-10 border-blue-500 py-3 px-6">
@@ -39,7 +39,7 @@ export default function Menu({ type = "none", buttonLink, text, inputChange }: M
             </button>
           </div>
         ) : type === 'button' ? (
-          <button className="bg-gray-200 px-5 py-2 rounded-md text-sm font-medium text-gray-700  hover:text-white hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <button className="bg-gray-200 px-5 py-2 rounded-md text-sm font-medium text-gray-700  hover:text-white hover:bg-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" onClick={() => onClick && onClick()}>
             <a href={buttonLink || '#'}>{text || 'Botón'}</a>
           </button>
         ) : null}

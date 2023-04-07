@@ -1,4 +1,5 @@
 "use client";
+
 import Menu from "@/components/molecules/menu";
 import ProgressBar from "@/components/atoms/progress_bar";
 import ArrowNav from "@/components/molecules/arrow_nav";
@@ -13,10 +14,14 @@ import { useTeacherContext } from "@/context/teacherContext";
 
 const Page = () => {
   let { menu, arrow_nav, progress_bar, primera_seccion} = data;
-  let { teachers, filteredTeachers, categories, selectedTeachers, toggleTeacherSelection } = useTeacherContext();
-
+  let { filteredTeachers, categories, selectedTeachers, toggleTeacherSelection, selectedCategory, toggleSubjectSelectionBadge } = useTeacherContext();
+  
   const selectedTeacher = (teacher: any) => {
     return selectedTeachers.includes(teacher);
+  }
+
+  const selectedTeacherBadges = (teacher: string | string[]) => {
+    return teacher === selectedCategory;
   }
 
   return (
@@ -27,7 +32,7 @@ const Page = () => {
       <div className="px-4 py-2 text-center">
         <Typography type="text" color="blue">{primera_seccion.title}</Typography>
       </div>
-      <BadgeList color={primera_seccion.subjects_badge.color} badges={categories} />
+      <BadgeList color={primera_seccion.subjects_badge.color} badges={categories} selectedBadges={selectedTeacherBadges} onClick={toggleSubjectSelectionBadge} />
       <ItemList type={2} items={filteredTeachers} selectedItems={selectedTeacher} onClick={toggleTeacherSelection} />
       <div className="px-4 py-2 text-center">
         <Typography type="text" color="blue">Preguntas de filtracion:</Typography>

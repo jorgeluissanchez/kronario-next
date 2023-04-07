@@ -13,9 +13,13 @@ import SplashScreen from "@/components/molecules/splash_screen";
 
 const Page = () => {
   let { menu, arrow_nav, progress_bar, badge_list } = data;
-  const { selectedMajors, toggleMajorSelection, categories, filterMajors, filteredMajors } = useMajorContext();
+  const { selectedMajors, toggleMajorSelection, categories, filterMajors, filteredMajors, selectedCategory, toggleMajorSelectionBadges } = useMajorContext();
   const selectedMajor = (major: any) => {
     return selectedMajors.includes(major);
+  }
+
+  const selectedMajorBadges = (major: any) => {
+    return selectedCategory === major;
   }
 
   const [ splash_screen, setSplashScreen ] = useState(true);
@@ -26,16 +30,19 @@ const Page = () => {
     }, 3000);
   }, []);
 
-  if (splash_screen) {
-    return <SplashScreen />;
-  }
-  
+  const block = () => {
+    if (selectedMajors.length === 0) {
+      return "both";
+    } else {
+      return arrow_nav.block;
+    }
+  };
   return (
     <div className="flex flex-col h-screen ">
       <Menu type={menu.type} text={menu.text} inputChange={filterMajors} />
       <ProgressBar progress={progress_bar.progress} />
-      <ArrowNav block={arrow_nav.block} rightUrl={arrow_nav.rightUrl} text={arrow_nav.text} />
-      <BadgeList color={badge_list.color} badges={categories} />
+      <ArrowNav block={block()} rightUrl={arrow_nav.rightUrl} text={arrow_nav.text} />
+      <BadgeList color={badge_list.color} badges={categories} selectedBadges={selectedMajorBadges} onClick={toggleMajorSelectionBadges} />
       <div className="flex-1 overflow-y-auto">
         <ItemList items={filteredMajors} selectedItems={selectedMajor} onClick={toggleMajorSelection} />
       </div>

@@ -16,6 +16,8 @@ interface TeacherContextValue {
   filterTeachers: (text: string) => void;
   categories: string[];
   filteredTeachers: teacherProps[];
+  toggleSubjectSelectionBadge: (subject: string) => void;
+  selectedCategory: string;
 }
 
 const TeacherContext = createContext<TeacherContextValue>({
@@ -25,6 +27,8 @@ const TeacherContext = createContext<TeacherContextValue>({
     filterTeachers: () => {},
     categories: [],
     filteredTeachers: [],
+    toggleSubjectSelectionBadge: () => {},
+    selectedCategory: '',
 });
 
 export const useTeacherContext = () => useContext(TeacherContext);
@@ -39,7 +43,7 @@ const TeacherProvider = ({ children }: TeacherContextProps) => {
     const [teachers, setTeachers] = useState<teacherProps[]>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [filteredTeachers, setFilteredTeachers] = useState<teacherProps[]>([]);
-    
+    const [selectedCategory, setSelectedCategory] = useState<string>('');
 
     const toggleTeacherSelection = (teacher: teacherProps) => {
         setSelectedTeachers((prevSelectedTeachers) => {
@@ -52,17 +56,24 @@ const TeacherProvider = ({ children }: TeacherContextProps) => {
                 return newSelectedTeachers;
             }
         });
-    }; // Agrega llave de cierre aquí
+    };
+
+    const toggleSubjectSelectionBadge = (subject: string) => {
+        setSelectedCategory(subject);
+        setFilteredTeachers(teachers.filter((teacher) => teacher.category === subject));
+    };
 
     const filterTeachers = (Category: string) => {
         setFilteredTeachers(teachers.filter((teacher) => teacher.category === Category));
     };
 
     useEffect(() => {
+        let Subjects = selectedSubjects.map((subject) => subject.name);
         setSelectedTeachers([]);
         setTeachers(data.primera_seccion.profesor_list);
-        setFilteredTeachers(data.primera_seccion.profesor_list);
-        setCategories(selectedSubjects.map((subject) => subject.name));
+        setCategories(Subjects);
+        setSelectedCategory(Subjects[0]);
+        setFilteredTeachers(data.primera_seccion.profesor_list.filter((teacher) => teacher.category === Subjects[0]));
     }, [selectedSubjects]);
 
     const value = {
@@ -72,6 +83,8 @@ const TeacherProvider = ({ children }: TeacherContextProps) => {
         filterTeachers,
         categories,
         filteredTeachers,
+        selectedCategory,
+        toggleSubjectSelectionBadge,
     };
 
     return <TeacherContext.Provider value={value}>{children}</TeacherContext.Provider>;
