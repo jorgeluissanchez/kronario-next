@@ -12,7 +12,6 @@ interface Curso {
 
 
 interface ScheduleContextValue {
-    Update: () => void;
     nextSchedule: () => void;
     prevSchedule: () => void;
     rows: any[];
@@ -22,7 +21,6 @@ interface ScheduleContextValue {
 }
 
 const ScheduleContext = createContext<ScheduleContextValue>({
-    Update: () => {},
     nextSchedule: () => {},
     prevSchedule: () => {},
     rows: [],
@@ -272,7 +270,6 @@ const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
     colorRows,
     nextSchedule,
     prevSchedule,
-    Update,
     contador,
     courses
     };
