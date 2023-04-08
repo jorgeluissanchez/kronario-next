@@ -1,8 +1,8 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from "react";
 import { useSubjectContext } from "@/context/subjectContext";
-import { pagina_restricciones } from '@/assets/data.json';
-
+import data from '@/assets/data';
+let pagina_restricciones = data.pagina_restricciones;
 interface teacherProps {
   id: string;
   name: string;

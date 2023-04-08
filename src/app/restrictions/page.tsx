@@ -8,7 +8,8 @@ import Typography from "@/components/atoms/typography";
 import QuestionList from "@/components/organisms/question_list";
 import BadgeList from "@/components/molecules/badge_list";
 
-import { pagina_restricciones } from '@/assets/data.json';
+import data from '@/assets/data';
+const pagina_restricciones = data.pagina_restricciones;
 
 import { useTeacherContext } from "@/context/teacherContext";
 

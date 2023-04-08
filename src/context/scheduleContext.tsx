@@ -1,7 +1,7 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from "react";
-import { pagina_horarios } from '@/assets/data.json';
-
+import data from '@/assets/data';
+const pagina_horarios = data.pagina_horarios;
 interface Curso {
     name: string;
     NRC: string;

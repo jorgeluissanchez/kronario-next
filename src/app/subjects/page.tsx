@@ -6,8 +6,8 @@ import BadgeList from "@/components/molecules/badge_list";
 import ItemList from "@/components/organisms/item_list";
 import ArrowNav from "@/components/molecules/arrow_nav";
 import { useSubjectContext } from "@/context/subjectContext";
-import { pagina_asignaturas } from '@/assets/data.json';
-
+import data from '@/assets/data';
+const pagina_asignaturas = data.pagina_asignaturas;
 const Page = () => {
 
   let { menu, arrow_nav, progress_bar, badge_list } = pagina_asignaturas;

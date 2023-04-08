@@ -1,8 +1,8 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useMajorContext } from "@/context/majorContext";
-import { pagina_asignaturas} from '@/assets/data.json';
-
+import data from '@/assets/data';
+const pagina_asignaturas = data.pagina_asignaturas;
 
 interface SubjectProps {
   id: string;

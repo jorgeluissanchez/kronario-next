@@ -1,6 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
-import { pagina_carreras } from "@/assets/data.json";
+import data from "@/assets/data";
+const pagina_carreras = data.pagina_carreras;
 
 interface MajorProps {
   id: string;

@@ -1,4 +1,4 @@
-{
+const data = {
   "splash_screen": {
     "logoSrc": "/kronario_full.svg",
     "logoAlt": "logo_full",
@@ -701,3 +701,5 @@
     ]
   }
 }
+
+export default data

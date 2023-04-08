@@ -6,13 +6,13 @@ import BadgeList from "@/components/molecules/badge_list";
 import ItemList from "@/components/organisms/item_list";
 import ArrowNav from "@/components/molecules/arrow_nav";
 import { useMajorContext } from "@/context/majorContext";
-import { pagina_carreras as data} from '@/assets/data.json';
+import  data from '@/assets/data';
 import { useEffect, useState } from "react";
-
+const pagina_carreras = data.pagina_carreras
 import SplashScreen from "@/components/molecules/splash_screen";
 
 const Page = () => {
-  let { menu, arrow_nav, progress_bar, badge_list } = data;
+  let { menu, arrow_nav, progress_bar, badge_list } = pagina_carreras;
   const { selectedMajors, toggleMajorSelection, categories, filterMajors, filteredMajors, selectedCategory, toggleMajorSelectionBadges } = useMajorContext();
   const selectedMajor = (major: any) => {
     return selectedMajors.includes(major);
