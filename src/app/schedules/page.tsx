@@ -82,9 +82,9 @@ const Page = () => {
         </div>
         <div className="w-full lg:w-1/3 mx-4 p-2">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
-            { courses.map((course: any) => {
+            { courses.map((course: any, key) => {
               return (
-            <div className="bg-gray-100 rounded-lg p-4 hover:bg-gray-200">
+            <div className="bg-gray-100 rounded-lg p-4 hover:bg-gray-200" key={key}>
               
               <div className={`h-4 w-4 rounded-full float-left mr-2 ${course.color}`}></div>
               <p className="font-medium text-sm">{course.name}</p>
