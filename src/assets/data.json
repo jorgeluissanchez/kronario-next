@@ -345,6 +345,359 @@
       "block": "right",
       "leftUrl": "/restrictions",
       "rightUrl": "none"
-    }
+    },
+    "horarios": [
+        [
+          {
+            "name": "PROGRAMACION ORIENTADA A OBJETOS",
+            "NRC": "2894",
+            "teachers": [
+              "Angulo Madrid, Eduardo"
+            ],
+            "blocks": [
+              [
+                "F",
+                "0930 - 1128",
+                "BLOQG2 - 34G2"
+              ],
+              [
+                "R",
+                "1630 - 1828",
+                "BLOQB - SDU2"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "CALCULO 3",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "W",
+                "1630 - 1828",
+                "BLOQJ - 11J"
+              ],
+              [
+                "T",
+                "1630 - 1828",
+                "BLOQJ - 34J"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "FISICA ELECTRICIDAD",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "T",
+                "1430 - 1628",
+                "BLOQJ - 25C"
+              ],
+              [
+                "W",
+                "1430 - 1529",
+                "BLOQJ - 23C"
+              ],
+              [
+                "F",
+                "1430 - 1628",
+                "BLOQL - L1-5"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "MATEMATICA DISCRETA",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "M",
+                "1230 - 1428",
+                "BLOQE - 11E"
+              ],
+              [
+                "T",
+                "0630 - 0729",
+                "BLOQE - 11E"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "ESTRUCTURA DE DATOS I",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "T",
+                "0730 - 0928",
+                "BLOQJ - 34J"
+              ],
+              [
+                "W",
+                "1030 - 1228",
+                "BLOQD - SDU4"
+              ]
+            ],
+            "quotas": "1"
+          }
+        ],
+        [
+          {
+            "name": "PROGRAMACION ORIENTADA A OBJETOS",
+            "NRC": "2894",
+            "teachers": [
+              "Angulo Madrid, Eduardo"
+            ],
+            "blocks": [
+              [
+                "F",
+                "0930 - 1128",
+                "BLOQG2 - 34G2"
+              ],
+              [
+                "R",
+                "1630 - 1828",
+                "BLOQB - SDU2"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "CALCULO 3",
+            "NRC": "3107",
+            "teachers": [
+              "Uribe Jongbloed, Bernardo"
+            ],
+            "blocks": [
+              [
+                "W",
+                "1630 - 1828",
+                "BLOQJ - 11J"
+              ],
+              [
+                "T",
+                "1630 - 1828",
+                "BLOQJ - 34J"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "INGLES VI",
+            "NRC": "4873",
+            "teachers": [
+              "Torres Lopez, Leidy"
+            ],
+            "blocks": [
+              [
+                "M",
+                "1430 - 1529",
+                "BLOQJ - I1-21"
+              ],
+              [
+                "T",
+                "1230 - 1428",
+                "BLOQJ - 53G1"
+              ],
+              [
+                "R",
+                "1430 - 1529",
+                "BLOQI - I3-12"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "FISICA ELECTRICIDAD",
+            "NRC": "2357",
+            "teachers": [
+              "Miranda Crespo, Juan"
+            ],
+            "blocks": [
+              [
+                "T",
+                "1430 - 1628",
+                "BLOQJ - 25C"
+              ],
+              [
+                "W",
+                "1430 - 1529",
+                "BLOQJ - 23C"
+              ],
+              [
+                "F",
+                "1430 - 1628",
+                "BLOQL - L1-5"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "MATEMATICA DISCRETA",
+            "NRC": "3128",
+            "teachers": [
+              "Mejia Salazar, Diana"
+            ],
+            "blocks": [
+              [
+                "M",
+                "1230 - 1428",
+                "BLOQE - 11E"
+              ],
+              [
+                "T",
+                "0630 - 0729",
+                "BLOQE - 11E"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "ESTRUCTURA DE DATOS I",
+            "NRC": "2901",
+            "teachers": [
+              "Gamarra Acosta, Margarita"
+            ],
+            "blocks": [
+              [
+                "T",
+                "0730 - 0928",
+                "BLOQJ - 34J"
+              ],
+              [
+                "W",
+                "1030 - 1228",
+                "BLOQD - SDU4"
+              ]
+            ],
+            "quotas": "1"
+          }
+        ],
+        [
+          {
+            "name": "PROGRAMACION ORIENTADA A OBJETOS",
+            "NRC": "2894",
+            "teachers": [
+              "Angulo Madrid, Eduardo"
+            ],
+            "blocks": [
+              [
+                "F",
+                "0930 - 1128",
+                "BLOQG2 - 34G2"
+              ],
+              [
+                "R",
+                "1630 - 1828",
+                "BLOQB - SDU2"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "CALCULO 3",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "W",
+                "1630 - 1828",
+                "BLOQJ - 11J"
+              ],
+              [
+                "T",
+                "1630 - 1828",
+                "BLOQJ - 34J"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "INGLES VI",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "M",
+                "1430 - 1529",
+                "BLOQJ - I1-21"
+              ],
+              [
+                "T",
+                "1230 - 1428",
+                "BLOQJ - 53G1"
+              ],
+              [
+                "R",
+                "1430 - 1529",
+                "BLOQI - I3-12"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "FISICA ELECTRICIDAD",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "T",
+                "1430 - 1628",
+                "BLOQJ - 25C"
+              ],
+              [
+                "W",
+                "1430 - 1529",
+                "BLOQJ - 23C"
+              ],
+              [
+                "F",
+                "1430 - 1628",
+                "BLOQL - L1-5"
+              ]
+            ],
+            "quotas": "1"
+          },
+          {
+            "name": "ESTRUCTURA DE DATOS I",
+            "NRC": "3010",
+            "teachers": [
+              "Uribe, Bernardo"
+            ],
+            "blocks": [
+              [
+                "T",
+                "0730 - 0928",
+                "BLOQJ - 34J"
+              ],
+              [
+                "W",
+                "1030 - 1228",
+                "BLOQD - SDU4"
+              ]
+            ],
+            "quotas": "1"
+          }
+        ]
+    ]
   }
 }

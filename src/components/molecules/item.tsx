@@ -12,7 +12,7 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({ id, name, category, selected, onClick }) => {
   return (
     <li
-      className={`rounded-lg p-4 flex flex-col cursor-pointer hover:bg-gray-200x ${selected ? 'bg-gray-200' : 'bg-gray-100'}`}
+      className={`rounded-lg p-4 flex flex-col cursor-pointer hover:bg-gray-200x ${selected ? 'bg-gray-300' : 'bg-gray-100'}`}
       onClick={onClick}
     >
       <div className="truncate line-clamp-2">

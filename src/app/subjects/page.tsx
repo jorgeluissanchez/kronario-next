@@ -22,6 +22,7 @@ const Page = () => {
     return majors.includes(selectedCategory);
   }
 
+
   const block = () => {
     if (selectedSubjects.length === 0) {
       return "right";

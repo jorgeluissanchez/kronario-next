@@ -3,6 +3,7 @@ import './globals.css'
 import { MajorProvider } from '@/context/majorContext'
 import { SubjectProvider } from '@/context/subjectContext'
 import { TeacherProvider } from '@/context/teacherContext'
+import { ScheduleProvider } from '@/context/scheduleContext'
 
 export const metadata = {
   title: 'Kronario',
@@ -21,7 +22,9 @@ export default function RootLayout({
        <MajorProvider>
           <SubjectProvider>
             <TeacherProvider>
+              <ScheduleProvider>
         { children }
+              </ScheduleProvider>
             </TeacherProvider>
           </SubjectProvider>
 
