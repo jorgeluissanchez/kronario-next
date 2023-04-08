@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
-import { pagina_carreras as data } from "@/assets/data.json";
+import { pagina_carreras } from "@/assets/data.json";
 
 interface MajorProps {
   id: string;
@@ -76,10 +76,10 @@ const MajorProvider = ({ children }: MajorProviderProps) => {
 
 
   useEffect(() => {
-    setMajors(data.item_list);
+    setMajors(pagina_carreras.item_list);
     setCategories(["Pregrado", "Posgrado"]);
     setSelectedCategory("Pregrado");
-    setFilteredMajors(data.item_list.filter((major) => major.category == "Pregrado"));
+    setFilteredMajors(pagina_carreras.item_list.filter((major) => major.category == "Pregrado"));
   }, []);
 
   const value = {

@@ -8,12 +8,12 @@ import Typography from "@/components/atoms/typography";
 import QuestionList from "@/components/organisms/question_list";
 import BadgeList from "@/components/molecules/badge_list";
 
-import { pagina_restricciones as data} from '@/assets/data.json';
+import { pagina_restricciones } from '@/assets/data.json';
 
 import { useTeacherContext } from "@/context/teacherContext";
 
 const Page = () => {
-  let { menu, arrow_nav, progress_bar, primera_seccion} = data;
+  let { menu, arrow_nav, progress_bar, primera_seccion} = pagina_restricciones;
   let { filteredTeachers, categories, selectedTeachers, toggleTeacherSelection, selectedCategory, toggleSubjectSelectionBadge } = useTeacherContext();
   
   const selectedTeacher = (teacher: any) => {

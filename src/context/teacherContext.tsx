@@ -1,7 +1,7 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from "react";
 import { useSubjectContext } from "@/context/subjectContext";
-import { pagina_restricciones as data} from '@/assets/data.json';
+import { pagina_restricciones } from '@/assets/data.json';
 
 interface teacherProps {
   id: string;
@@ -70,10 +70,10 @@ const TeacherProvider = ({ children }: TeacherContextProps) => {
     useEffect(() => {
         let Subjects = selectedSubjects.map((subject) => subject.name);
         setSelectedTeachers([]);
-        setTeachers(data.primera_seccion.profesor_list);
+        setTeachers(pagina_restricciones.primera_seccion.profesor_list);
         setCategories(Subjects);
         setSelectedCategory(Subjects[0]);
-        setFilteredTeachers(data.primera_seccion.profesor_list.filter((teacher) => teacher.category === Subjects[0]));
+        setFilteredTeachers(pagina_restricciones.primera_seccion.profesor_list.filter((teacher) => teacher.category === Subjects[0]));
     }, [selectedSubjects]);
 
     const value = {

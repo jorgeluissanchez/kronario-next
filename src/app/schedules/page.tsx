@@ -5,12 +5,12 @@ import ProgressBar from "@/components/atoms/progress_bar";
 import ArrowNav from "@/components/molecules/arrow_nav";
 import Table from "@/components/organisms/tabla";
 import * as htmlToImage from 'html-to-image';
-import { pagina_horarios as data } from '@/assets/data.json';
+import { pagina_horarios } from '@/assets/data.json';
 import { useScheduleContext } from "@/context/scheduleContext";
 import { useSwipeable } from 'react-swipeable';
 
 const Page = () => {
-  const { menu, arrow_nav, progress_bar } = data;
+  const { menu, arrow_nav, progress_bar } = pagina_horarios;
   const { nextSchedule, prevSchedule, courses } = useScheduleContext();
   const tableRef = useRef(null);
   const [showArrowReminder, setShowArrowReminder] = useState(true);

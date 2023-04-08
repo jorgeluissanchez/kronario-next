@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useState, useEffect } from "react";
 import { useMajorContext } from "@/context/majorContext";
-import { pagina_asignaturas as data} from '@/assets/data.json';
+import { pagina_asignaturas} from '@/assets/data.json';
 
 
 interface SubjectProps {
@@ -82,10 +82,10 @@ const SubjectProvider = ({ children }: SubjectProviderProps) => {
     let Majors = selectedMajors.map((major) => major.name);
     const response = `https://api.example.com/subjects?majors=${selectedMajors.map((major) => major.id).join(",")}`;
     setSelectedSubjects([]);
-    setSubjects(data.item_list);
+    setSubjects(pagina_asignaturas.item_list);
     setCategories(Majors);
     setSelectedCategory(Majors[0]);
-    setFilteredSubjects(data.item_list.filter((subject) => subject.category.includes(Majors[0])));
+    setFilteredSubjects(pagina_asignaturas.item_list.filter((subject) => subject.category.includes(Majors[0])));
   }, [selectedMajors]);
 
   const value = {

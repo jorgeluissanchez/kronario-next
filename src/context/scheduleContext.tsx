@@ -1,6 +1,6 @@
 "use client"
 import { createContext, useContext, useState, useEffect } from "react";
-import { pagina_horarios as data } from '@/assets/data.json';
+import { pagina_horarios } from '@/assets/data.json';
 
 interface Curso {
     name: string;
@@ -43,7 +43,7 @@ const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
     const [courses, setCourses] = useState<Curso[]>([]);
  
     useEffect(() => {
-        setHorarios(data.horarios);
+        setHorarios(pagina_horarios.horarios);
       }, []);
       useEffect(() => {
         Update();
