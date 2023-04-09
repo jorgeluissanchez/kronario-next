@@ -8,6 +8,9 @@ import * as htmlToImage from 'html-to-image';
 import data from '@/assets/data';
 import { useScheduleContext } from "@/context/scheduleContext";
 import { useSwipeable } from 'react-swipeable';
+
+import ImageNext from 'next/image';
+
 const pagina_horarios = data.pagina_horarios;
 
 const Page = () => {
@@ -15,7 +18,9 @@ const Page = () => {
   const { nextSchedule, prevSchedule, courses } = useScheduleContext();
   const tableRef = useRef(null);
   const [showArrowReminder, setShowArrowReminder] = useState(true);
-  const [remindeContent, setReminderContent] = useState("Use las flechas para navegar entre los horarios");
+  const [reminderContent, setReminderContent] = useState("Use las flechas para navegar entre los horarios");
+
+  const [errorClipboard, setErrorClipboard] = useState(false);
 
   const handleKeyDown = (event: any) => {
     if (event.key === 'ArrowLeft') {
@@ -29,10 +34,10 @@ const Page = () => {
   const [copiedNRC, setCopiedNRC] = useState('');
 
   const handleCopy = (nrc: string) => {
+         setShowArrowReminder(false);
     navigator.clipboard.writeText(nrc)
       .then(() =>{
          setCopiedNRC(nrc)
-         setShowArrowReminder(false);
           setTimeout(() => {
             setCopiedNRC('');
           }
@@ -41,24 +46,11 @@ const Page = () => {
       )
       .catch((error) => {
         if (error.name === 'NotAllowedError') {
-          alert({
-            title: 'Permiso al portapapeles denegado',
-            description: 'Para copiar el NRC, debes permitir el acceso al portapapeles',
-            status: 'error',
-            duration: 2000,
-            isClosable: true,
-          });
-
-        } else {
-          alert(
-            {
-              title: 'Error al copiar el NRC',
-              description: 'No se pudo copiar el NRC',
-              status: 'error',
-              duration: 2000,
-              isClosable: true,
-            }
-          );
+          setErrorClipboard(true);
+          setTimeout(() => {
+            setErrorClipboard(false);
+          }
+          , 2000);
         }
       });
   };
@@ -137,9 +129,38 @@ const Page = () => {
         </div>
       </div>
       {showArrowReminder && (
-        <div className="fixed bottom-0 left-0 right-0 bg-yellow-300 p-2 text-center">
-          <p className="text-xs">{remindeContent} / Clickea en un curso para copiar su NRC</p>
+        <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-md px-4 py-2 bg-gray-100 border-t-4 border-blue-500 rounded-b shadow-md">
+        <div className="flex items-center">
+          <div className="flex-shrink-0 rounded-md p-2">
+            <ImageNext src="/infoIcon.svg" width={24} height={24}  alt="Informacion" />
+          </div>
+          <div className="ml-3">
+            <p className="text-sm font-medium text-gray-900">
+              Informacion
+            </p>
+            <p className="mt-1 text-sm text-gray-600">
+              {reminderContent} / Clickea en un curso para copiar su NRC
+            </p>
+          </div>
         </div>
+      </div>
+      )}
+      {errorClipboard && (
+        <div className="fixed bottom-0 left-0 right-0 mx-auto max-w-md px-4 py-2 bg-gray-100 border-t-4 border-blue-500 rounded-b shadow-md">
+        <div className="flex items-center">
+          <div className="flex-shrink-0 rounded-md p-2">
+            <ImageNext src="/infoIcon.svg" width={24} height={24}  alt="Informacion" />
+          </div>
+          <div className="ml-3">
+            <p className="text-sm font-medium text-gray-900">
+              Informacion
+            </p>
+            <p className="mt-1 text-sm text-gray-600">
+              Habilita el acceso al portapapeles para copiar el NRC
+            </p>
+          </div>
+        </div>
+      </div>
       )}
     </div>
   );
