@@ -39,7 +39,9 @@ const Page = () => {
           , 2000);
       }
       )
-      .catch((error) => console.error(`Error al copiar el NRC ${nrc}: ${error}`));
+      .catch((error) => {
+        alert(`Error copiando el NRC: ${error}`);
+      });
   };
 
 
