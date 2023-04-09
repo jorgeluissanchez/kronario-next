@@ -609,7 +609,7 @@ const data = {
           },
           {
             "name": "CALCULO 3",
-            "NRC": "3010",
+            "NRC": "3710",
             "teachers": [
               "Uribe, Bernardo"
             ],
@@ -629,7 +629,7 @@ const data = {
           },
           {
             "name": "INGLES VI",
-            "NRC": "3010",
+            "NRC": "3078",
             "teachers": [
               "Uribe, Bernardo"
             ],
@@ -654,7 +654,7 @@ const data = {
           },
           {
             "name": "FISICA ELECTRICIDAD",
-            "NRC": "3010",
+            "NRC": "3041",
             "teachers": [
               "Uribe, Bernardo"
             ],
@@ -679,7 +679,7 @@ const data = {
           },
           {
             "name": "ESTRUCTURA DE DATOS I",
-            "NRC": "3010",
+            "NRC": "3069",
             "teachers": [
               "Uribe, Bernardo"
             ],
