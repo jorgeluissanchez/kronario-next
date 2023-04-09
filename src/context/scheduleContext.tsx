@@ -12,6 +12,7 @@ interface Curso {
     teachers: string[];
     blocks: string[][];
     quotas: string;
+    
 }
 
 interface ScheduleContextValue {
@@ -21,6 +22,7 @@ interface ScheduleContextValue {
     colorRows: any[];
     contador: number;
     courses: any[];
+    horarios: any[];
 }
 
 const ScheduleContext = createContext<ScheduleContextValue>({
@@ -30,6 +32,7 @@ const ScheduleContext = createContext<ScheduleContextValue>({
     colorRows: [],
     contador: 0,
     courses: [],
+    horarios: [],
 });
 
 export const useScheduleContext = () => useContext(ScheduleContext);
@@ -302,7 +305,8 @@ const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
     nextSchedule,
     prevSchedule,
     contador,
-    courses
+    courses,
+    horarios,
     };
 
 
