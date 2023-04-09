@@ -40,7 +40,7 @@ const Question: React.FC<QuestionProps> = ({ questionId }) => {
   }
 
   return (
-    <div className={`bg-white rounded-lg p-4 flex flex-col ${selectedAnswer !== null ? 'bg-gray-300' : ''} cursor-pointer hover:bg-gray-200 relative`}>
+    <div className={`bg-white rounded-lg p-4 flex flex-col ${selectedAnswer !== null ? 'bg-gray-300' : ''} cursor-pointer md:hover:bg-gray-200 relative`}>
       <div className="px-4 pb-2">
         <Typography type="p" color="blue">
           {question.question}
@@ -50,7 +50,7 @@ const Question: React.FC<QuestionProps> = ({ questionId }) => {
         {question.answers.map((answer: any, index:any) => (
           <li
             key={index}
-            className={`bg-gray-100 rounded-lg p-4 flex flex-col cursor-pointer hover:bg-gray-200 ${selectedAnswer === index ? 'bg-gray-300' : ''}`}
+            className={`bg-gray-100 rounded-lg p-4 flex flex-col cursor-pointer md:hover:bg-gray-200 ${selectedAnswer === index ? 'bg-gray-300' : ''}`}
             onClick={() => handleAnswerClick(index)}
           >
             <Typography type="subtext" color="gray">
