@@ -10,14 +10,6 @@ import  data from '@/assets/data';
 import { useEffect, useState } from "react";
 const pagina_carreras = data.pagina_carreras
 import SplashScreen from "@/components/molecules/splash_screen";
-import { Metadata } from 'next'
-
-
-export const metadata: Metadata = {
-  title: "Kronario - Elige tu carrera",
-  description: "Elige tu carrera en la Universidad del Norte con Kronario. Encuentra la carrera que mejor se adapte a tus intereses y necesidades.",
-  keywords: "Kronario, Universidad del Norte, Carrera, Elección de carrera",
-};
 
 const Page = () => {
   let { menu, arrow_nav, progress_bar, badge_list } = pagina_carreras;
