@@ -50,7 +50,6 @@ const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
 
     useEffect(() => {
         setHorarios(pagina_horarios.horarios);
-        console.log(questionsAndAnswersSelected, selectedTeachers);
     }, [questionsAndAnswersSelected, selectedTeachers]);
 
     useEffect(() => {
