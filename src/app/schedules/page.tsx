@@ -40,7 +40,11 @@ const Page = () => {
       }
       )
       .catch((error) => {
-        alert(`Error copiando el NRC: ${error}`);
+        if (error.name === 'NotAllowedError') {
+          alert('Por favor, habilita el permiso de copiar en tu navegador');
+        } else {
+          alert('Algo salió mal');
+        }
       });
   };
 
