@@ -41,9 +41,24 @@ const Page = () => {
       )
       .catch((error) => {
         if (error.name === 'NotAllowedError') {
-          alert('Por favor, habilita el permiso de copiar en tu navegador');
+          alert({
+            title: 'Permiso al portapapeles denegado',
+            description: 'Para copiar el NRC, debes permitir el acceso al portapapeles',
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          });
+
         } else {
-          alert('Algo salió mal');
+          alert(
+            {
+              title: 'Error al copiar el NRC',
+              description: 'No se pudo copiar el NRC',
+              status: 'error',
+              duration: 2000,
+              isClosable: true,
+            }
+          );
         }
       });
   };
