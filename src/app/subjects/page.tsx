@@ -8,6 +8,14 @@ import ArrowNav from "@/components/molecules/arrow_nav";
 import { useSubjectContext } from "@/context/subjectContext";
 import data from '@/assets/data';
 const pagina_asignaturas = data.pagina_asignaturas;
+
+
+export const subjectPageMetadata = {
+  title: "Kronario - Elige tus materias",
+  description: "Elige tus materias en la Universidad del Norte con Kronario. Encuentra las materias que mejor se adapten a tus intereses y necesidades.",
+  keywords: "Kronario, Universidad del Norte, Materias, Elección de materias",
+};
+
 const Page = () => {
 
   let { menu, arrow_nav, progress_bar, badge_list } = pagina_asignaturas;

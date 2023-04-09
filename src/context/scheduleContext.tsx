@@ -1,7 +1,11 @@
-"use client"
+"use client";
 import { createContext, useContext, useState, useEffect } from "react";
+import { useTeacherContext } from "@/context/teacherContext";
+import { useQuestionContext } from "@/context/questionContext";
 import data from '@/assets/data';
+
 const pagina_horarios = data.pagina_horarios;
+
 interface Curso {
     name: string;
     NRC: string;
@@ -9,7 +13,6 @@ interface Curso {
     blocks: string[][];
     quotas: string;
 }
-
 
 interface ScheduleContextValue {
     nextSchedule: () => void;
@@ -32,38 +35,66 @@ const ScheduleContext = createContext<ScheduleContextValue>({
 export const useScheduleContext = () => useContext(ScheduleContext);
 
 interface ScheduleProviderProps {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }
 
 const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
     const [horarios, setHorarios] = useState<Curso[][]>([]);
     const [contador, setContador] = useState(0);
     const [courses, setCourses] = useState<Curso[]>([]);
- 
+    const { questionsAndAnswersSelected } = useQuestionContext();
+    const { selectedTeachers } = useTeacherContext();
+
     useEffect(() => {
         setHorarios(pagina_horarios.horarios);
-      }, []);
-      useEffect(() => {
-        Update();
-        }, [horarios, setHorarios]);
-    
-  const hours = ["6:30", "7:30", "8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30"];
+        console.log(questionsAndAnswersSelected, selectedTeachers);
+    }, [questionsAndAnswersSelected, selectedTeachers]);
 
-  const defaultRows = hours.map((hora) => {
-    return { hora: hora, lunes: '', martes: '', miercoles: '', jueves: '', viernes: '', sabado: '' };
+    useEffect(() => {
+        Update();
+    }, [horarios]);
+
+    const hours = [
+        "6:30",
+        "7:30",
+        "8:30",
+        "9:30",
+        "10:30",
+        "11:30",
+        "12:30",
+        "13:30",
+        "14:30",
+        "15:30",
+        "16:30",
+        "17:30",
+        "18:30",
+        "19:30",
+    ];
+
+    const defaultRows = hours.map((hora) => {
+        return { hora: hora, lunes: "", martes: "", miercoles: "", jueves: "", viernes: "", sabado: "" };
     });
 
-  const [rows, setRows] = useState(defaultRows);
+    const [rows, setRows] = useState(defaultRows);
 
-  const defauldColorRows = hours.map((hora) => {
-    return { lunes: '', martes: '', miercoles: '', jueves: '', viernes: '', sabado: '' };
-});
+    const defauldColorRows = hours.map((hora) => {
+        return { lunes: "", martes: "", miercoles: "", jueves: "", viernes: "", sabado: "" };
+    });
 
-  const [colorRows, setColorRows] = useState(defauldColorRows);
+    const [colorRows, setColorRows] = useState(defauldColorRows);
 
-  const Select = (value: number) => {
-    let classes = ["bg-red-200", "bg-blue-200", "bg-green-200", "bg-yellow-200", "bg-purple-200", "bg-pink-200", "bg-indigo-200", "bg-orange-200"];
-    return classes[value +1];
+    const Select = (value: number) => {
+        let classes = [
+            "bg-red-200",
+            "bg-blue-200",
+            "bg-green-200",
+            "bg-yellow-200",
+            "bg-purple-200",
+            "bg-pink-200",
+            "bg-indigo-200",
+            "bg-orange-200",
+        ];
+        return classes[value+1];
   }
 
   const Verify = (horaString: string) => {

@@ -4,8 +4,9 @@ import { MajorProvider } from '@/context/majorContext'
 import { SubjectProvider } from '@/context/subjectContext'
 import { TeacherProvider } from '@/context/teacherContext'
 import { ScheduleProvider } from '@/context/scheduleContext'
-
-export const metadata = {
+import { QuestionProvider } from '@/context/questionContext'
+import { Metadata } from 'next'
+export const metadata: Metadata = {
   title: 'Kronario',
   description: 'Kronario es una aplicación para seleccionar tu horario universitario en la universidad del norte.',
 }
@@ -22,9 +23,11 @@ export default function RootLayout({
        <MajorProvider>
           <SubjectProvider>
             <TeacherProvider>
+                <QuestionProvider>
               <ScheduleProvider>
-        { children }
+                  { children }
               </ScheduleProvider>
+                </QuestionProvider>
             </TeacherProvider>
           </SubjectProvider>
 

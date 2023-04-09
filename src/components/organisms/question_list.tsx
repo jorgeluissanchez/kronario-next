@@ -1,24 +1,22 @@
+"use client"
 import React from "react";
-import Item from "@/components/molecules/item";
-import Question from "../molecules/question";
+import { useQuestionContext } from "@/context/questionContext"
+import Question from "@/components/molecules/question";
 
-interface QuestionProps {
-    question: string;
-    answers: string[];
-}
+const QuestionList = () => {
+  const { questions } = useQuestionContext();
 
-interface QuestionListProps {
-    questions: QuestionProps[];
-}
-
-const QuestionList: React.FC<QuestionListProps> = ({ questions }) => {
   return (
-    <ul className={`grid gap-4 p-2 bg-white grid-cols-1 md:grid-cols-2 lg:grid-cols-2`}>
-        {questions.map((question, index) => (
-            <Question key={index} question={question.question} answers={question.answers} />
-        ))}
-    </ul>
+    <div className="flex gap-4 grid grid-cols-1 md:grid-cols-2 p-2">
+      {questions.map((question) => (
+        <Question 
+          key={question.id}
+          questionId={question.id}
+        />
+      ))}
+    </div>
   );
 };
 
 export default QuestionList;
+

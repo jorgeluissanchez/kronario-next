@@ -7,6 +7,7 @@ import ItemList from "@/components/organisms/item_list";
 import Typography from "@/components/atoms/typography";
 import QuestionList from "@/components/organisms/question_list";
 import BadgeList from "@/components/molecules/badge_list";
+import Table from "@/components/organisms/blockHour";
 
 import data from '@/assets/data';
 const pagina_restricciones = data.pagina_restricciones;
@@ -38,14 +39,13 @@ const Page = () => {
       <div className="px-4 py-2 text-center">
         <Typography type="text" color="blue">Preguntas de filtracion:</Typography>
       </div>
-      <QuestionList questions={[{question: "¿Quieres un horario mas distribuido?", answers: ["Si", "No"]}, {question: "¿Que tipo de ciclo prefieres?", answers: ["Nocturno", "Diurno"]}]} />
+      <QuestionList />
       <div className="px-4 py-2 text-center">
         <Typography type="text" color="blue">Bloquea tus Horas</Typography>
       </div>
-      <div className="h-[500px] mt-2 mb-4 mx-2 md:mx-auto lg:w-[900px] md:w-[700px]  bg-yellow-500 rounded  flex justify-center items-center">
-        <p className="transform rotate-2 animate-spin infinite text-lg md:text-2xl  lg:text-4xl font-bold">Ponte las pilas</p>
-      </div>
+      <div className="mt-2 mb-4 mx-2 md:mx-auto lg:w-[900px] md:w-[700px] flex justify-center items-center rounded-lg shadow-lg overflow-hidden">
 
+      <Table />      </div>
     </>
   );
 };
