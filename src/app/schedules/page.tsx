@@ -26,7 +26,23 @@ const Page = () => {
     }
     setShowArrowReminder(false);
   };
-  
+  const [copiedNRC, setCopiedNRC] = useState('');
+
+  const handleCopy = (nrc: string) => {
+    navigator.clipboard.writeText(nrc)
+      .then(() =>{
+         setCopiedNRC(nrc)
+         setShowArrowReminder(false);
+          setTimeout(() => {
+            setCopiedNRC('');
+          }
+          , 2000);
+      }
+      )
+      .catch((error) => console.error(`Error al copiar el NRC ${nrc}: ${error}`));
+  };
+
+
   let handlers: any = useSwipeable({
     onSwipedLeft: () => {
       nextSchedule();
@@ -82,26 +98,26 @@ const Page = () => {
           </div>
         </div>
         <div className="w-full lg:w-1/3 mx-4 p-2">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
-            { courses.map((course: any, key) => {
-              return (
-            <div className="bg-gray-100 rounded-lg p-4 hover:bg-gray-200" key={key}>
-              
-              <div className={`h-4 w-4 rounded-full float-left mr-2 ${course.color}`}></div>
-              <p className="font-medium text-sm">{course.name}</p>
-              <p className="text-xs text-gray-500">NRC: {course.nrc}</p>
-      <div className="truncate line-clamp-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-1 gap-4">
+        { courses.map((course: any, key) => (
+          <div className="bg-gray-100 rounded-lg p-4 overflow-hidden relative md:hover:bg-gray-200" key={key}  onClick={() => handleCopy(course.nrc)}>
+            <div className={`h-4 w-4 rounded-full float-left mr-2 ${course.color}`}></div>
+            <p className="font-medium text-sm">{course.name}</p>
+            <p className="text-xs text-gray-500">NRC: {course.nrc}</p>
+            <div className="truncate line-clamp-1">
               <p className="text-xs text-gray-500">Profesor/es: {course.teachers.join(', ')}</p>
-              </div>
             </div>
-              )
-})}
+            <div className={`absolute ${course.color} top-0 right-0 w-full h-full flex justify-center items-center ${copiedNRC === course.nrc ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`}>
+              <p className="text-xs text-gray-500 font-bold">NRC {course.nrc} copiado</p>
+            </div>
           </div>
+        ))}
+      </div>
         </div>
       </div>
       {showArrowReminder && (
         <div className="fixed bottom-0 left-0 right-0 bg-yellow-300 p-2 text-center">
-          <p className="text-xs">{remindeContent}</p>
+          <p className="text-xs">{remindeContent} / Clickea en un curso para copiar su NRC</p>
         </div>
       )}
     </div>
