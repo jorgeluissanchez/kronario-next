@@ -1,6 +1,7 @@
 import React from "react";
 import Typography from "@/components/atoms/typography";
 import { useQuestionContext } from "@/context/questionContext";
+import { useState } from "react";
 
 interface QuestionProps {
   questionId: number;
@@ -39,25 +40,27 @@ const Question: React.FC<QuestionProps> = ({ questionId }) => {
       break;
   }
 
+
   return (
-    <div className={`bg-white rounded-lg p-4 flex flex-col ${selectedAnswer !== null ? 'bg-gray-300' : ''} cursor-pointer md:hover:bg-gray-200 relative`}>
+    <div className={`bg-white rounded-lg p-2 flex flex-col`}>
       <div className="px-4 pb-2">
         <Typography type="p" color="blue">
           {question.question}
         </Typography>
       </div>
       <ul className={`grid ${className} gap-4 p-2 bg-white rounded-lg`}>
-        {question.answers.map((answer: any, index:any) => (
+        {question.answers.map((answer: any, index:any) =>{ 
+          return(
           <li
             key={index}
-            className={`bg-gray-100 rounded-lg p-4 flex flex-col cursor-pointer md:hover:bg-gray-200 ${selectedAnswer === index ? 'bg-gray-300' : ''}`}
-            onClick={() => handleAnswerClick(index)}
+            className={`rounded-lg p-4 flex flex-col cursor-pointer ${selectedAnswer === index ? 'bg-gray-300' : 'bg-gray-100  md:hover:bg-gray-200 '} transition-colors duration-300`}
+            onClick={() =>handleAnswerClick(index)}
           >
             <Typography type="subtext" color="gray">
               {answer}
             </Typography>
           </li>
-        ))}
+        )})}
       </ul>
     </div>
   );
