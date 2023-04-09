@@ -3,6 +3,8 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { useTeacherContext } from "@/context/teacherContext";
 import { useQuestionContext } from "@/context/questionContext";
 import data from '@/assets/data';
+import { BlockHourContext } from "@/context/blockHoursContext";
+import Question from "@/components/molecules/question";
 
 const pagina_horarios = data.pagina_horarios;
 
@@ -11,8 +13,7 @@ interface Curso {
     NRC: string;
     teachers: string[];
     blocks: string[][];
-    quotas: string;
-    
+    quotas: string;   
 }
 
 interface ScheduleContextValue {
@@ -47,10 +48,11 @@ const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
     const [courses, setCourses] = useState<Curso[]>([]);
     const { questionsAndAnswersSelected } = useQuestionContext();
     const { selectedTeachers } = useTeacherContext();
+    const { lastTrueIndices } = useContext(BlockHourContext);
 
     useEffect(() => {
         setHorarios(pagina_horarios.horarios);
-    }, [questionsAndAnswersSelected, selectedTeachers]);
+    }, [questionsAndAnswersSelected, selectedTeachers, lastTrueIndices]);
 
     useEffect(() => {
         Update();

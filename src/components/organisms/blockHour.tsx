@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { BlockHourContext } from "@/context/blockHoursContext";
 
 const Table: React.FC = () => {
-  const { tableData, lastTrueIndices, handleSaveData, handleClick } = useContext(BlockHourContext);
+  const { tableData, handleClick } = useContext(BlockHourContext);
   const [isMouseDown, setIsMouseDown] = React.useState(false);
 
   const handleMouseDown = (e?: any) => {

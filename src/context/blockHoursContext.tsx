@@ -13,7 +13,6 @@ interface BlockHourContextType {
   tableData: any[];
   lastTrueIndices: any[];
   handleTableData: (tableData: any[]) => void;
-  handleSaveData: () => void;
   handleGetIndices: () => void;
   handleClick: (rowIndex: number, colIndex: ColumnOrder) => void;
 }
@@ -22,7 +21,6 @@ export const BlockHourContext = createContext<BlockHourContextType>({
   tableData: [],
   lastTrueIndices: [],
   handleTableData: () => {},
-  handleSaveData: () => {},
   handleGetIndices: () => {},
   handleClick: () => {},
 });
@@ -35,10 +33,6 @@ export const BlockHourProvider = ({ children }: { children: React.ReactNode }) =
 
   const handleTableData = (data: any[]) => {
     setTableData(data);
-  };
-
-  const handleSaveData = () => {
-    console.log(lastTrueIndices);
   };
 
   const handleClick = (rowIndex: number, colIndex: ColumnOrder) => {
@@ -78,7 +72,6 @@ export const BlockHourProvider = ({ children }: { children: React.ReactNode }) =
         tableData,
         lastTrueIndices,
         handleTableData,
-        handleSaveData,
         handleGetIndices,
         handleClick
       }}

@@ -80,9 +80,10 @@ const SubjectProvider = ({ children }: SubjectProviderProps) => {
 
   useEffect(() => { 
     let Majors = selectedMajors.map((major) => major.name);
-    const response = `https://api.example.com/subjects?majors=${selectedMajors.map((major) => major.id).join(",")}`;
+
     setSelectedSubjects([]);
     setSubjects(pagina_asignaturas.item_list);
+    console.log(pagina_asignaturas.item_list);
     setCategories(Majors);
     setSelectedCategory(Majors[0]);
     setFilteredSubjects(pagina_asignaturas.item_list.filter((subject) => subject.category.includes(Majors[0])));
