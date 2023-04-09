@@ -9,14 +9,7 @@ import data from '@/assets/data';
 import { useScheduleContext } from "@/context/scheduleContext";
 import { useSwipeable } from 'react-swipeable';
 const pagina_horarios = data.pagina_horarios;
-import { Metadata } from 'next'
 
-
-export const metadata: Metadata = {
-  title: "Kronario - Horarios",
-  description: "Crea tu horario soñado con Kronario. Encuentra los horarios que mejor se adapten a tus intereses y necesidades.",
-  keywords: "Kronario, Universidad del Norte, Horarios",
-};
 const Page = () => {
   const { menu, arrow_nav, progress_bar } = pagina_horarios;
   const { nextSchedule, prevSchedule, courses } = useScheduleContext();

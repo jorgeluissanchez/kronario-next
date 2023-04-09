@@ -1,5 +1,4 @@
 "use client";
-
 import Menu from "@/components/molecules/menu";
 import ProgressBar from "@/components/atoms/progress_bar";
 import BadgeList from "@/components/molecules/badge_list";
@@ -9,12 +8,6 @@ import { useSubjectContext } from "@/context/subjectContext";
 import data from '@/assets/data';
 const pagina_asignaturas = data.pagina_asignaturas;
 
-
-export const subjectPageMetadata = {
-  title: "Kronario - Elige tus materias",
-  description: "Elige tus materias en la Universidad del Norte con Kronario. Encuentra las materias que mejor se adapten a tus intereses y necesidades.",
-  keywords: "Kronario, Universidad del Norte, Materias, Elección de materias",
-};
 
 const Page = () => {
 
