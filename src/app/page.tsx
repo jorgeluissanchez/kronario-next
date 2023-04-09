@@ -36,7 +36,15 @@ const Page = () => {
   const handleStart = () => {
     setValue('true');
     window.localStorage.setItem('started', 'true');
+    
   };
+  
+  useEffect(() => {
+    window.addEventListener("beforeunload", function(event) {
+      event.preventDefault();
+      event.returnValue = "¿Estás seguro de que quieres salir de esta página?";
+    });
+      }, []);
 
   const block = () => {
     if (selectedMajors.length === 0) {

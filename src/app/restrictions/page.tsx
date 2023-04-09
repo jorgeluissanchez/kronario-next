@@ -30,6 +30,7 @@ const Page = () => {
       redirect(arrow_nav.leftUrl);
     }
   }, [categories]);
+
   const selectedTeacherBadges = (teacher: string | string[]) => {
     return teacher === selectedCategory;
   }
