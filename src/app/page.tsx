@@ -23,10 +23,10 @@ const Page = () => {
     return selectedCategory === major;
   };
   
-  const { update, read } = useLocalStorage('firstTime', 'false');
+  const [storedValue, setValue ] = useLocalStorage('visited', 'false');
 
   const handleStart = () => {
-    update('true');
+    setValue('true');
   };
 
   const block = () => {
@@ -37,7 +37,7 @@ const Page = () => {
     }
   };
 
-  if (read() === 'false') {
+  if (storedValue === 'false') {
     return <SplashScreen onClick={handleStart} />;
   }
     
