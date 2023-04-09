@@ -6,6 +6,8 @@ import { TeacherProvider } from '@/context/teacherContext'
 import { ScheduleProvider } from '@/context/scheduleContext'
 import { QuestionProvider } from '@/context/questionContext'
 import { Metadata } from 'next'
+import { BlockHourProvider } from '@/context/blockHoursContext'
+
 export const metadata: Metadata = {
   title: 'Kronario',
   description: 'Kronario es una aplicación para seleccionar tu horario universitario en la universidad del norte.',
@@ -21,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className='font-roboto bg-white'>
        <MajorProvider>
+        <BlockHourProvider>
           <SubjectProvider>
             <TeacherProvider>
                 <QuestionProvider>
@@ -30,7 +33,7 @@ export default function RootLayout({
                 </QuestionProvider>
             </TeacherProvider>
           </SubjectProvider>
-
+        </BlockHourProvider>
         </MajorProvider>
       </body>
     </html>

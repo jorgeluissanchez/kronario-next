@@ -1,86 +1,134 @@
-"use client";
-import { useState } from "react";
+import React, { useContext } from "react";
+import { BlockHourContext } from "@/context/blockHoursContext";
 
-const hours = ["6:30", "7:30", "8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30"];
+const Table: React.FC = () => {
+  const { tableData, lastTrueIndices, handleSaveData, handleClick } = useContext(BlockHourContext);
+  const [isMouseDown, setIsMouseDown] = React.useState(false);
 
-const rows = hours.map((hora) => {
-  return { hora: hora, lunes: false, martes: false, miercoles: false, jueves: false, viernes: false, sabado: false };
-});
-
-type ColumnOrder = "lunes" | "martes" | "miercoles" | "jueves" | "viernes" | "sabado";
-
-const Table = () => {
-  const [tableData, setTableData] = useState(rows);
-
-  const columnOrder: ColumnOrder[] = ["lunes", "martes", "miercoles", "jueves", "viernes", "sabado"];
-
-  const handleSaveData = () => {
-    console.log(lastTrueIndices)
-  }
-
-  const [lastTrueIndices, setLastTrueIndices] = useState<any[]>([]);
-
-
-  const handleClick = (rowIndex: number, colIndex: ColumnOrder) => {
-    const updatedRows = [...tableData];
-    updatedRows[rowIndex][colIndex] = !updatedRows[rowIndex][colIndex];
-    setTableData(updatedRows);
-    handleGetIndices();
+  const handleMouseDown = (e?: any) => {
+    if (e.key === "Shift") {
+      setIsMouseDown(true);
+    }
+    if(!e.key){
+    setIsMouseDown(true);
+    }
   };
 
-
-  const handleGetIndices = () => {
-    const trueIndices: any = [];
-
-    for (let i = 0; i < tableData.length; i++) {
-      const row = tableData[i];
-      for (let j = 0; j < columnOrder.length; j++) {
-        const col = columnOrder[j];
-        if (row[col]) {
-          const columnMap: { [key: string]: string } = {
-            "lunes": "M",
-            "martes": "T",
-            "miercoles": "W",
-            "jueves": "R",
-            "viernes": "F",
-            "sabado": "S"
-          };
-          const index: any = { hora: row.hora, columna: columnMap[col] };
-          trueIndices.push(index);
-        }
-      }
+  const handleMouseUp = (e?: any) => {
+    if(e.key === "Shift"){
+      setIsMouseDown(false);
     }
-    setLastTrueIndices(trueIndices);
+    if(!e.key){
+      setIsMouseDown(false);
+    }
+  };
+
+  React.useEffect(() => {
+    window.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("mouseup", handleMouseUp);
+    window.addEventListener("keydown", handleMouseDown);
+    window.addEventListener("keyup", handleMouseUp);
+    return () => {
+      window.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("mouseup", handleMouseUp);
+      window.addEventListener("keydown", (e) => handleMouseDown(e));
+      window.addEventListener("keyup", (e) => handleMouseUp(e));
+    };
+  }, []);
+
+
+  const handleCellClick = (rowIndex: number, colIndex: string) => {
+    handleClick(rowIndex, colIndex as any);
   };
 
   return (
-      <table className="text-[9px] sm:text-sm md:text-sm w-full border-none h-full">
-        <thead>
-          <tr className="bg-yellow-400 text-white">
-            <th className="py-3">Hora</th>
-            {columnOrder.map((col: ColumnOrder) => (
-              <th key={col}>{col}</th>
-            ))}
+    
+    <table className="text-xs sm:text-sm md:text-sm w-full">
+      <thead>
+        <tr className="bg-gray-100">
+          <th className="py-3 text-center font-medium text-gray-600 ">Hora</th>
+          <th className="py-3 text-center font-medium text-gray-600 ">Lunes</th>
+          <th className="py-3 text-center font-medium text-gray-600 ">Martes</th>
+          <th className="py-3 text-center font-medium text-gray-600 ">Miércoles</th>
+          <th className="py-3 text-center font-medium text-gray-600 ">Jueves</th>
+          <th className="py-3 text-center font-medium text-gray-600 ">Viernes</th>
+          <th className="py-3 text-center font-medium text-gray-600 ">Sábado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {tableData.map((row, rowIndex) => (
+          <tr key={rowIndex}>
+            <td className="text-center bg-gray-100 py-2">{row.hora}</td>
+            <td
+              onMouseOver={() => {
+                if (isMouseDown) handleCellClick(rowIndex, "lunes");
+              }}
+              onClick={() => handleCellClick(rowIndex, "lunes")}
+              className={`${
+                row.lunes
+                  ? "bg-yellow-200 md:hover:bg-yellow-300"
+                  : (rowIndex % 2 === 0 ? "bg-white md:hover:bg-gray-50" : "bg-gray-100 md:hover:bg-gray-200")
+              } text-center cursor-pointer`}
+            ></td>
+            <td
+              onMouseOver={() => {
+                if (isMouseDown) handleCellClick(rowIndex, "martes");
+              }}
+              onClick={() => handleCellClick(rowIndex, "martes")}
+              className={`${
+                row.martes
+                  ? "bg-yellow-200 md:hover:bg-yellow-300"
+                  :  (rowIndex % 2 === 0 ? "bg-white md:hover:bg-gray-50" : "bg-gray-100 md:hover:bg-gray-200")
+              } text-center cursor-pointer`}
+            ></td>
+            <td
+              onMouseOver={() => {
+                if (isMouseDown) handleCellClick(rowIndex, "miercoles");
+              }}
+              onClick={() => handleCellClick(rowIndex, "miercoles")}
+              className={`${
+                row.miercoles
+                  ? "bg-yellow-200 md:hover:bg-yellow-300"
+                  :  (rowIndex % 2 === 0 ? "bg-white md:hover:bg-gray-50" : "bg-gray-100 md:hover:bg-gray-200")
+              } text-center cursor-pointer`}
+            ></td>
+            <td
+              onMouseOver={() => {
+                if (isMouseDown) handleCellClick(rowIndex, "jueves");
+              }}
+              onClick={() => handleCellClick(rowIndex, "jueves")}
+              className={`${
+                row.jueves
+                  ? "bg-yellow-200 md:hover:bg-yellow-300"
+                  : (rowIndex % 2 === 0 ? "bg-white md:hover:bg-gray-50" : "bg-gray-100 md:hover:bg-gray-200")
+              } text-center cursor-pointer`}
+            ></td>
+            <td
+              onMouseOver={() => {
+                if (isMouseDown) handleCellClick(rowIndex, "viernes");
+              }}
+              onClick={() => handleCellClick(rowIndex, "viernes")}
+              className={`${
+                row.viernes
+                  ? "bg-yellow-200 md:hover:bg-yellow-300"
+                  :  (rowIndex % 2 === 0 ? "bg-white md:hover:bg-gray-50" : "bg-gray-100 md:hover:bg-gray-200")
+              } text-center cursor-pointer`}
+            ></td>
+            <td
+              onMouseOver={() => {
+                if (isMouseDown) handleCellClick(rowIndex, "sabado");
+              }}
+              onClick={() => handleCellClick(rowIndex, "sabado")}
+              className={`${
+                row.sabado
+                  ? "bg-yellow-200 md:hover:bg-yellow-300"
+                  :  (rowIndex % 2 === 0 ? "bg-white md:hover:bg-gray-50" : "bg-gray-100 md:hover:bg-gray-200")
+              } text-center cursor-pointer`}
+            ></td>
           </tr>
-        </thead>
-        <tbody className="py-3">
-          {tableData.map((row, rowIndex) => (
-            <tr
-              key={rowIndex}
-              className={rowIndex % 2 === 0 ? "bg-white" : "bg-gray-100"}
-            >
-              <th className="py-3">{row.hora}</th>
-              {columnOrder.map((col: ColumnOrder) => (
-                <td
-                  key={col}
-                  className={row[col] ? "bg-yellow-200" : ""}
-                  onClick={() => handleClick(rowIndex, col)}
-                ></td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        ))}
+      </tbody>
+    </table>
   );
 };
 

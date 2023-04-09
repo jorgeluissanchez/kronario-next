@@ -51,10 +51,11 @@ const Page = () => {
       <QuestionList />
       <div className="px-4 py-2 text-center">
         <Typography type="text" color="blue">Bloquea tus Horas</Typography>
-      </div>
-      <div className="mt-2 mb-4 mx-2 md:mx-auto lg:w-[900px] md:w-[700px] flex justify-center items-center rounded-lg shadow-lg overflow-hidden">
-        <Table />
-      </div>
+      </div><div className="w-full p-4 flex justify-center items-center">
+          <div className="rounded-lg flex justify-center items-center overflow-hidden shadow-lg w-full md:w-2/3 lg:w-2/3">
+            <Table />
+          </div>
+        </div>
     </div>
     </div>
   );
