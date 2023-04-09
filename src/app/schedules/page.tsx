@@ -13,14 +13,23 @@ import ImageNext from 'next/image';
 
 const pagina_horarios = data.pagina_horarios;
 
+import { redirect } from 'next/navigation';
+
 const Page = () => {
   const { menu, arrow_nav, progress_bar } = pagina_horarios;
-  const { nextSchedule, prevSchedule, courses } = useScheduleContext();
+  const { nextSchedule, prevSchedule, courses, horarios } = useScheduleContext();
+
   const tableRef = useRef(null);
   const [showArrowReminder, setShowArrowReminder] = useState(true);
   const [reminderContent, setReminderContent] = useState("Use las flechas para navegar entre los horarios");
 
   const [errorClipboard, setErrorClipboard] = useState(false);
+
+  useEffect(() => {
+    if (horarios.length === 0) {
+      redirect(arrow_nav.leftUrl);
+    }
+  }, [horarios]);
 
   const handleKeyDown = (event: any) => {
     if (event.key === 'ArrowLeft') {

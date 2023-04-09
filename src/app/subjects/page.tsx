@@ -6,14 +6,27 @@ import ItemList from "@/components/organisms/item_list";
 import ArrowNav from "@/components/molecules/arrow_nav";
 import { useSubjectContext } from "@/context/subjectContext";
 import data from '@/assets/data';
+import { useEffect } from "react";
 const pagina_asignaturas = data.pagina_asignaturas;
+import { redirect } from 'next/navigation';
+
 
 
 const Page = () => {
+  
 
   let { menu, arrow_nav, progress_bar, badge_list } = pagina_asignaturas;
 
+
+
   const { selectedSubjects, toggleSubjectSelection, categories, filterSubjects, filteredSubjects, selectedCategory, toggleSubjectSelectionBadges } = useSubjectContext();
+
+  
+  useEffect(() => {
+    if (categories.length === 0) {
+      redirect(arrow_nav.leftUrl);
+    }
+  }, [categories]);
 
   const selectedSubject = (major: any) => {
     return selectedSubjects.includes(major);

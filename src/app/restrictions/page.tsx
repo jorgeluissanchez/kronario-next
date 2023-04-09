@@ -11,6 +11,9 @@ import Table from "@/components/organisms/blockHour";
 
 import data from '@/assets/data';
 const pagina_restricciones = data.pagina_restricciones;
+import { useEffect } from "react";
+
+import { redirect } from 'next/navigation';
 
 import { useTeacherContext } from "@/context/teacherContext";
 
@@ -22,6 +25,11 @@ const Page = () => {
     return selectedTeachers.includes(teacher);
   }
 
+  useEffect(() => {
+    if (categories.length === 0) {
+      redirect(arrow_nav.leftUrl);
+    }
+  }, [categories]);
   const selectedTeacherBadges = (teacher: string | string[]) => {
     return teacher === selectedCategory;
   }
