@@ -35,10 +35,11 @@ const Page = () => {
   }
 
   return (
-    <>
+    <div className="flex flex-col h-screen ">
       <Menu type={menu.type} text={menu.text} /> 
       <ProgressBar progress={progress_bar.progress} />
       <ArrowNav block={arrow_nav.block} leftUrl={arrow_nav.leftUrl} rightUrl={arrow_nav.rightUrl} text={arrow_nav.text} />
+    <div className="flex-1 overflow-y-auto">
       <div className="px-4 py-2 text-center">
         <Typography type="text" color="blue">{primera_seccion.title}</Typography>
       </div>
@@ -52,9 +53,10 @@ const Page = () => {
         <Typography type="text" color="blue">Bloquea tus Horas</Typography>
       </div>
       <div className="mt-2 mb-4 mx-2 md:mx-auto lg:w-[900px] md:w-[700px] flex justify-center items-center rounded-lg shadow-lg overflow-hidden">
-
-      <Table />      </div>
-    </>
+        <Table />
+      </div>
+    </div>
+    </div>
   );
 };
 

@@ -109,10 +109,11 @@ const Page = () => {
   }, []);
 
   return (
-    <div {...handlers}>
+    <div {...handlers} className="flex flex-col h-screen ">
       <Menu type={menu.type} text={menu.text} onClick={handleDownloadImage} />
       <ProgressBar progress={progress_bar.progress} />
       <ArrowNav block={arrow_nav.block} leftUrl={arrow_nav.leftUrl} rightUrl={arrow_nav.rightUrl} text={arrow_nav.text} />
+    <div className="flex-1 overflow-y-auto">
       <div className="flex flex-col lg:flex-row items-center justify-center lg:justify-between bg-white" ref={tableRef}>
         <div className="w-full md:w-2/3 mx-4 p-4">
           <div className="bg-gray-500 rounded-lg flex justify-center items-center">
@@ -172,6 +173,7 @@ const Page = () => {
       </div>
       )}
     </div>
+  </div>
   );
 };
 

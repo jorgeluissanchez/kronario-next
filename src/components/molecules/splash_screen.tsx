@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import Typography from '@/components/atoms/typography';
 import Image from '@/components/atoms/image';
 import data from '@/assets/data';
-import useLocalStorage from '@/hooks/useLocalStorage';
 
 const splash_screen = data.splash_screen;
 
