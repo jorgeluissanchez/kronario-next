@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useState } from "react";
 
-const hours = ["6:30", "7:30", "8:30", "9:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30"];
+const hours = ["06:30", "07:30", "08:30", "09:30", "10:30", "11:30", "12:30", "13:30", "14:30", "15:30", "16:30", "17:30", "18:30", "19:30", "20:30"];
 
 const rows = hours.map((hora) => {
   return { hora: hora, lunes: false, martes: false, miercoles: false, jueves: false, viernes: false, sabado: false };

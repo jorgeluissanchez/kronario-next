@@ -77,10 +77,21 @@ const MajorProvider = ({ children }: MajorProviderProps) => {
 
 
   useEffect(() => {
-    setMajors(pagina_carreras.item_list);
-    setCategories(["Pregrado", "Posgrado"]);
+    
+    fetch("http://127.0.0.1:8000/majors")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error al obtener los datos");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setMajors(data);
+        setFilteredMajors(data.filter((major: any) => major.category == "Pregrado"));
+      })
+      .catch((error) => console.error(error));
+    setCategories(["Pregrado"]);
     setSelectedCategory("Pregrado");
-    setFilteredMajors(pagina_carreras.item_list.filter((major) => major.category == "Pregrado"));
   }, []);
 
   const value = {

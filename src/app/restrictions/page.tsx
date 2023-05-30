@@ -16,11 +16,12 @@ import { useEffect } from "react";
 import { redirect } from 'next/navigation';
 
 import { useTeacherContext } from "@/context/teacherContext";
+import { useScheduleContext } from "@/context/scheduleContext";
 
 const Page = () => {
   let { menu, arrow_nav, progress_bar, primera_seccion} = pagina_restricciones;
   let { filteredTeachers, categories, selectedTeachers, toggleTeacherSelection, selectedCategory, toggleSubjectSelectionBadge } = useTeacherContext();
-  
+  const  { loading } = useScheduleContext();
   const selectedTeacher = (teacher: any) => {
     return selectedTeachers.includes(teacher);
   }
@@ -34,7 +35,13 @@ const Page = () => {
   const selectedTeacherBadges = (teacher: string | string[]) => {
     return teacher === selectedCategory;
   }
-
+  if(loading){
+    return (
+      <div className="flex flex-col h-screen bg-gray-100 justify-center items-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-gray-900"></div>
+      </div>
+    )    
+  }
   return (
     <div className="flex flex-col h-screen ">
       <Menu type={menu.type} text={menu.text} /> 

@@ -80,13 +80,27 @@ const SubjectProvider = ({ children }: SubjectProviderProps) => {
 
   useEffect(() => { 
     let Majors = selectedMajors.map((major) => major.name);
-
+    fetch("http://127.0.0.1:8000/majors/classcodes", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(selectedMajors)
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Error en la petición");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setSubjects(data)
+        setFilteredSubjects(data.filter((subject: any) => subject.category.includes(Majors[0])));
+      })
+      .catch((error) => console.error(error));
     setSelectedSubjects([]);
-    setSubjects(pagina_asignaturas.item_list);
-    console.log(pagina_asignaturas.item_list);
     setCategories(Majors);
     setSelectedCategory(Majors[0]);
-    setFilteredSubjects(pagina_asignaturas.item_list.filter((subject) => subject.category.includes(Majors[0])));
   }, [selectedMajors]);
 
   const value = {

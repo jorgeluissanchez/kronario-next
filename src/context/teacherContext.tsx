@@ -4,30 +4,30 @@ import { useSubjectContext } from "@/context/subjectContext";
 import data from '@/assets/data';
 let pagina_restricciones = data.pagina_restricciones;
 interface teacherProps {
-  id: string;
-  name: string;
-  category: string;
+    id: string;
+    name: string;
+    category: string;
 }
 
 interface TeacherContextValue {
-  teachers: teacherProps[];
-  selectedTeachers: teacherProps[];
-  toggleTeacherSelection: (teacher: teacherProps) => void;
-  filterTeachers: (text: string) => void;
-  categories: string[];
-  filteredTeachers: teacherProps[];
-  toggleSubjectSelectionBadge: (subject: string) => void;
-  selectedCategory: string;
+    teachers: teacherProps[];
+    selectedTeachers: teacherProps[];
+    toggleTeacherSelection: (teacher: teacherProps) => void;
+    filterTeachers: (text: string) => void;
+    categories: string[];
+    filteredTeachers: teacherProps[];
+    toggleSubjectSelectionBadge: (subject: string) => void;
+    selectedCategory: string;
 }
 
 const TeacherContext = createContext<TeacherContextValue>({
     teachers: [],
     selectedTeachers: [],
-    toggleTeacherSelection: () => {},
-    filterTeachers: () => {},
+    toggleTeacherSelection: () => { },
+    filterTeachers: () => { },
     categories: [],
     filteredTeachers: [],
-    toggleSubjectSelectionBadge: () => {},
+    toggleSubjectSelectionBadge: () => { },
     selectedCategory: '',
 });
 
@@ -69,11 +69,30 @@ const TeacherProvider = ({ children }: TeacherContextProps) => {
 
     useEffect(() => {
         let Subjects = selectedSubjects.map((subject) => subject.name);
+        console.log(selectedSubjects)
+        fetch("http://127.0.0.1:8000/teachers", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(selectedSubjects)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error en la petición");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                setTeachers(data);
+                setFilteredTeachers(data.filter((teacher: any) => teacher.category === Subjects[0]));
+            })
+            .catch((error) => console.error(error));
         setSelectedTeachers([]);
-        setTeachers(pagina_restricciones.primera_seccion.profesor_list);
         setCategories(Subjects);
         setSelectedCategory(Subjects[0]);
-        setFilteredTeachers(pagina_restricciones.primera_seccion.profesor_list.filter((teacher) => teacher.category === Subjects[0]));
+        console.log(selectedSubjects)
+        console.log(pagina_restricciones.primera_seccion.profesor_list)
     }, [selectedSubjects]);
 
     const value = {
@@ -90,4 +109,4 @@ const TeacherProvider = ({ children }: TeacherContextProps) => {
     return <TeacherContext.Provider value={value}>{children}</TeacherContext.Provider>;
 };
 
-export {TeacherContext, TeacherProvider};
+export { TeacherContext, TeacherProvider };

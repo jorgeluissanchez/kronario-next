@@ -2,6 +2,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useTeacherContext } from "@/context/teacherContext";
 import { useQuestionContext } from "@/context/questionContext";
+import { useSubjectContext } from "@/context/subjectContext";
 import data from '@/assets/data';
 import { BlockHourContext } from "@/context/blockHoursContext";
 import Question from "@/components/molecules/question";
@@ -13,27 +14,31 @@ interface Curso {
     NRC: string;
     teachers: string[];
     blocks: string[][];
-    quotas: string;   
+    quotas: string;
 }
 
 interface ScheduleContextValue {
     nextSchedule: () => void;
     prevSchedule: () => void;
+    toggleClickStatus: () => void;
     rows: any[];
     colorRows: any[];
     contador: number;
     courses: any[];
     horarios: any[];
+    loading: boolean;
 }
 
 const ScheduleContext = createContext<ScheduleContextValue>({
-    nextSchedule: () => {},
-    prevSchedule: () => {},
+    nextSchedule: () => { },
+    prevSchedule: () => { },
+    toggleClickStatus: () => { },
     rows: [],
     colorRows: [],
     contador: 0,
     courses: [],
     horarios: [],
+    loading: false,
 });
 
 export const useScheduleContext = () => useContext(ScheduleContext);
@@ -44,25 +49,62 @@ interface ScheduleProviderProps {
 
 const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
     const [horarios, setHorarios] = useState<Curso[][]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
     const [contador, setContador] = useState(0);
     const [courses, setCourses] = useState<Curso[]>([]);
-    const { questionsAndAnswersSelected } = useQuestionContext();
     const { selectedTeachers } = useTeacherContext();
+    const { selectedSubjects } = useSubjectContext();
     const { lastTrueIndices } = useContext(BlockHourContext);
+    const [ clickStatus, setClickStatus ] = useState<boolean>(false);
+
+    const toggleClickStatus = () => {
+        setClickStatus(!clickStatus);
+    }
 
     useEffect(() => {
-        setHorarios(pagina_horarios.horarios);
-    }, [questionsAndAnswersSelected, selectedTeachers, lastTrueIndices]);
+        setLoading(true);
+        fetch("http://127.0.0.1:8000/schedule", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "time": lastTrueIndices,
+                "professors": selectedTeachers,
+                "subjects": selectedSubjects,
+            })
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Error en la petición");
+                }
+                return response.json();
+            })
+            .then(async (data) => {
+                console.log("hola", data);
+                console.log({
+                    "time": lastTrueIndices,
+                    "professors": selectedTeachers,
+                    "subjects": selectedSubjects,
+                })
+                setHorarios(data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+                setLoading(false);
+            });
+    }, [clickStatus]);
 
     useEffect(() => {
         Update();
     }, [horarios]);
 
     const hours = [
-        "6:30",
-        "7:30",
-        "8:30",
-        "9:30",
+        "06:30",
+        "07:30",
+        "08:30",
+        "09:30",
         "10:30",
         "11:30",
         "12:30",
@@ -73,6 +115,7 @@ const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
         "17:30",
         "18:30",
         "19:30",
+        "20:30",
     ];
 
     const defaultRows = hours.map((hora) => {
@@ -98,227 +141,230 @@ const ScheduleProvider = ({ children }: ScheduleProviderProps) => {
             "bg-indigo-200",
             "bg-orange-200",
         ];
-        return classes[value+1];
-  }
+        return classes[value + 1];
+    }
 
-  const Verify = (horaString: string) => {
-    const horaMap: { [key: string]: number } = {
-        "06": 0,
-        "07": 1,
-        "08": 2,
-        "09": 3,
-        "10": 4,
-        "11": 5,
-        "12": 6,
-        "13": 7,
-        "14": 8,
-        "15": 9,
-        "16": 10,
-        "17": 11,
-        "18": 12,
-        "19": 13
-    };
-    return horaMap[horaString] ?? 0;
-  }
+    const Verify = (horaString: string) => {
+        const horaMap: { [key: string]: number } = {
+            "06": 0,
+            "07": 1,
+            "08": 2,
+            "09": 3,
+            "10": 4,
+            "11": 5,
+            "12": 6,
+            "13": 7,
+            "14": 8,
+            "15": 9,
+            "16": 10,
+            "17": 11,
+            "18": 12,
+            "19": 13,
+            "20": 14,
+        };
+        return horaMap[horaString] ?? 0;
+    }
 
-  const Blanck = () => {
-    let newRows = [...rows];
-    newRows.forEach(row => {
-        row.lunes = '';
-        row.martes = '';
-        row.miercoles = '';
-        row.jueves = '';
-        row.viernes = '';
-        row.sabado = '';
-    });  
-    setRows(newRows);
-    let newColorRows = [...colorRows];
-    for (let i = 0; i < newColorRows.length; i++) {
-        let row = newColorRows[i];
-        if (i % 2 === 0) {
-            row.lunes = "bg-gray-100";
-            row.martes = "bg-gray-100";
-            row.miercoles = "bg-gray-100";
-            row.jueves = "bg-gray-100";
-            row.viernes = "bg-gray-100";
-            row.sabado = "bg-gray-100";
-        } else {
-            row.lunes = "";
-            row.martes = "";
-            row.miercoles = "";
-            row.jueves = "";
-            row.viernes = "";
-            row.sabado = "";
+    const Blanck = () => {
+        let newRows = [...rows];
+        newRows.forEach(row => {
+            row.lunes = '';
+            row.martes = '';
+            row.miercoles = '';
+            row.jueves = '';
+            row.viernes = '';
+            row.sabado = '';
+        });
+        setRows(newRows);
+        let newColorRows = [...colorRows];
+        for (let i = 0; i < newColorRows.length; i++) {
+            let row = newColorRows[i];
+            if (i % 2 === 0) {
+                row.lunes = "bg-gray-100";
+                row.martes = "bg-gray-100";
+                row.miercoles = "bg-gray-100";
+                row.jueves = "bg-gray-100";
+                row.viernes = "bg-gray-100";
+                row.sabado = "bg-gray-100";
+            } else {
+                row.lunes = "";
+                row.martes = "";
+                row.miercoles = "";
+                row.jueves = "";
+                row.viernes = "";
+                row.sabado = "";
+            }
         }
-    }
-    setColorRows(newColorRows);
-  };
+        setColorRows(newColorRows);
+    };
 
-  const Create = ( dia: string, salon: string, hora: number, nameColor: string, duration: number) => {
-    let newRows = [...rows];
-    let newColorRows = [...colorRows];
-    let salonArray: any = salon.split("-");
-    switch (salonArray.length) {
-        case 1:
-            salon = salonArray[0].trim();
-            break;
-        case 2:
-            salon = salonArray[1].trim();
-            break;
-        case 3:
-            salon = salonArray[1].trim() + " - " + salonArray[2].trim();
-            break;
-        default:
-            break;
-    } 
-    switch (dia) {
-        case "M":
-            newRows[hora].lunes = salon;
-            newColorRows[hora].lunes = nameColor
-            if (duration > 100) {
-                newRows[hora + 1].lunes = salon;
-                newColorRows[hora + 1].lunes = nameColor;
-                if (duration > 200) {
-                    newRows[hora + 2].lunes = salon;
-                    newColorRows[hora + 2].lunes = nameColor;
+    const Create = (dia: string, salon: string, hora: number, nameColor: string, duration: number) => {
+        let newRows = [...rows];
+        let newColorRows = [...colorRows];
+        let salonArray: any = salon.split("-");
+        switch (salonArray.length) {
+            case 1:
+                salon = salonArray[0].trim();
+                break;
+            case 2:
+                salon = salonArray[1].trim();
+                break;
+            case 3:
+                salon = salonArray[1].trim() + " - " + salonArray[2].trim();
+                break;
+            default:
+                break;
+        }
+        switch (dia) {
+            case "M":
+                newRows[hora].lunes = salon;
+                newColorRows[hora].lunes = nameColor
+                if (duration > 100) {
+                    newRows[hora + 1].lunes = salon;
+                    newColorRows[hora + 1].lunes = nameColor;
+                    if (duration > 200) {
+                        newRows[hora + 2].lunes = salon;
+                        newColorRows[hora + 2].lunes = nameColor;
+                    }
                 }
-            }
-            break;
-        case "T":
-            newRows[hora].martes = salon;
-            newColorRows[hora].martes = nameColor;
-            if (duration > 100) {
-                newRows[hora + 1].martes = salon;
-                newColorRows[hora + 1].martes = nameColor;
-                if (duration > 200) {
-                    newRows[hora + 2].martes = salon;
-                    newColorRows[hora + 2].martes = nameColor;
+                break;
+            case "T":
+                newRows[hora].martes = salon;
+                newColorRows[hora].martes = nameColor;
+                if (duration > 100) {
+                    newRows[hora + 1].martes = salon;
+                    newColorRows[hora + 1].martes = nameColor;
+                    if (duration > 200) {
+                        newRows[hora + 2].martes = salon;
+                        newColorRows[hora + 2].martes = nameColor;
+                    }
                 }
-            }
-            break;
-        case "W":
-            newRows[hora].miercoles = salon;
-            newColorRows[hora].miercoles = nameColor;
-            if (duration > 100) {
-                newRows[hora + 1].miercoles = salon;
-                newColorRows[hora + 1].miercoles = nameColor;
-                if (duration > 200) {
-                    newRows[hora + 2].miercoles = salon;
-                    newColorRows[hora + 2].miercoles = nameColor;
+                break;
+            case "W":
+                newRows[hora].miercoles = salon;
+                newColorRows[hora].miercoles = nameColor;
+                if (duration > 100) {
+                    newRows[hora + 1].miercoles = salon;
+                    newColorRows[hora + 1].miercoles = nameColor;
+                    if (duration > 200) {
+                        newRows[hora + 2].miercoles = salon;
+                        newColorRows[hora + 2].miercoles = nameColor;
+                    }
                 }
-            }
-            break;
-        case "R":
-            newRows[hora].jueves = salon;
-            newColorRows[hora].jueves = nameColor;
-            if (duration > 100) {
-                newRows[hora + 1].jueves = salon;
-                newColorRows[hora + 1].jueves = nameColor;
-                if (duration > 200) {
-                    newRows[hora + 2].jueves = salon;
-                    newColorRows[hora + 2].jueves = nameColor;
+                break;
+            case "R":
+                newRows[hora].jueves = salon;
+                newColorRows[hora].jueves = nameColor;
+                if (duration > 100) {
+                    newRows[hora + 1].jueves = salon;
+                    newColorRows[hora + 1].jueves = nameColor;
+                    if (duration > 200) {
+                        newRows[hora + 2].jueves = salon;
+                        newColorRows[hora + 2].jueves = nameColor;
+                    }
                 }
-            }
-            break;
-        case "F":
-            newRows[hora].viernes = salon;
-            newColorRows[hora].viernes = nameColor;
-            if (duration > 100) {
-                newRows[hora + 1].viernes = salon;
-                newColorRows[hora + 1].viernes = nameColor;
-                if (duration > 200) {
-                    newRows[hora + 2].viernes = salon;
-                    newColorRows[hora + 2].viernes = nameColor;
+                break;
+            case "F":
+                newRows[hora].viernes = salon;
+                newColorRows[hora].viernes = nameColor;
+                if (duration > 100) {
+                    newRows[hora + 1].viernes = salon;
+                    newColorRows[hora + 1].viernes = nameColor;
+                    if (duration > 200) {
+                        newRows[hora + 2].viernes = salon;
+                        newColorRows[hora + 2].viernes = nameColor;
+                    }
                 }
-            }
-            break;
-        case "S":
-            newRows[hora].sabado = salon;
-            newColorRows[hora].sabado = nameColor;
-            if (duration > 100) {
-                newRows[hora + 1].sabado = salon;
-                newColorRows[hora + 1].sabado = nameColor;
-                if (duration > 200) {
-                    newRows[hora + 2].sabado = salon;
-                    newColorRows[hora + 2].sabado = nameColor;
+                break;
+            case "S":
+                newRows[hora].sabado = salon;
+                newColorRows[hora].sabado = nameColor;
+                if (duration > 100) {
+                    newRows[hora + 1].sabado = salon;
+                    newColorRows[hora + 1].sabado = nameColor;
+                    if (duration > 200) {
+                        newRows[hora + 2].sabado = salon;
+                        newColorRows[hora + 2].sabado = nameColor;
+                    }
                 }
-            }
-            break;
+                break;
+        }
+        setRows(newRows);
+        setColorRows(newColorRows);
     }
-    setRows(newRows);
-    setColorRows(newColorRows);
-  }
 
-  const Obtain = () => {
-    
-  if (!horarios[contador]) return;
-    let colorNum: number = 1;
-    let courseList: any = [];
-    horarios[contador].forEach((horario: any) => {
-        const blocks = horario.blocks;
-        const nameColor = Select(colorNum);
-        blocks.forEach((bloque: any[]) => {
-            const day = bloque[0];
-            const horario = bloque[1];
-            const hora = Verify(horario.substring(0, 2));
-            const salones = bloque[2];
-            const duration = (parseInt(horario.split(' - ')[1], 10) - parseInt(horario.split(' - ')[0], 10));
-            Create(day, salones, hora, nameColor, duration);
+    const Obtain = () => {
+
+        if (!horarios[contador]) return;
+        let colorNum: number = 1;
+        let courseList: any = [];
+        horarios[contador].forEach((horario: any) => {
+            const blocks = horario.blocks;
+            const nameColor = Select(colorNum);
+            blocks.forEach((bloque: any[]) => {
+                const day = bloque[0];
+                const horario = bloque[1];
+                const hora = Verify(horario.substring(0, 2));
+                const salones = bloque[2];
+                const duration = (parseInt(horario.split(' - ')[1], 10) - parseInt(horario.split(' - ')[0], 10));
+                Create(day, salones, hora, nameColor, duration);
+            });
+            courseList.push({
+                name: horario.name,
+                color: nameColor,
+                nrc: horario.NRC,
+                teachers: [...horario.teachers]
+            });
+            colorNum++;
         });
-        courseList.push({
-            name: horario.name,
-            color: nameColor,
-            nrc: horario.NRC,
-            teachers: [...horario.teachers]
-        });
-        colorNum++;
-    });
-    setCourses(courseList);
-    }   
-    
-
-  const Update = () => {
-    Blanck();
-    Obtain();
-  }
-
-  const nextSchedule = () => {
-    if (contador < horarios.length - 1) {
-        setContador(contador + 1);
-    } else {
-        setContador(0);
+        setCourses(courseList);
     }
-    Update();
+
+
+    const Update = () => {
+        Blanck();
+        Obtain();
+    }
+
+    const nextSchedule = () => {
+        if (contador < horarios.length - 1) {
+            setContador(contador + 1);
+        } else {
+            setContador(0);
+        }
+        Update();
     }
 
     const prevSchedule = () => {
-    if (contador > 0) {
-        setContador(contador - 1);
-    } else {
-        setContador(horarios.length - 1);
-    }
-    Update();
+        if (contador > 0) {
+            setContador(contador - 1);
+        } else {
+            setContador(horarios.length - 1);
+        }
+        Update();
     }
 
-  const value = {
-    rows,
-    colorRows,
-    nextSchedule,
-    prevSchedule,
-    contador,
-    courses,
-    horarios,
+    const value = {
+        rows,
+        colorRows,
+        nextSchedule,
+        prevSchedule,
+        contador,
+        courses,
+        horarios,
+        toggleClickStatus,
+        loading
     };
 
 
 
-  return (
-    <ScheduleContext.Provider
-      value={value}
-    >
-      {children}
-    </ScheduleContext.Provider>
-  );
+    return (
+        <ScheduleContext.Provider
+            value={value}
+        >
+            {children}
+        </ScheduleContext.Provider>
+    );
 };
 
 export { ScheduleProvider, ScheduleContext };

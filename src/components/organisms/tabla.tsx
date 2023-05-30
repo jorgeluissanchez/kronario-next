@@ -12,7 +12,7 @@ function Tabla() {
         <thead>
           <tr className="bg-gray-100">
             <th className="py-2">Hora</th>
-            <th className="py-2">martes</th>
+            <th className="py-2">Lunes</th>
             <th className="py-2">Martes</th>
             <th className="py-2">Miércoles</th>
             <th className="py-2">Jueves</th>
@@ -184,7 +184,7 @@ function Tabla() {
                 </td>
               )}
 
-{colorRows[index - 1]?.miercoles == colors[index].miercoles &&
+            {colorRows[index - 1]?.miercoles == colors[index].miercoles &&
               row.miercoles == rows[index - 1]?.miercoles ? null : colorRows[
                   index + 1
                 ]?.miercoles == colors[index].miercoles &&
